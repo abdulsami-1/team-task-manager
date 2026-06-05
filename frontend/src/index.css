@@ -1,0 +1,8 @@
+/* Only the Tailwind entry point - no custom rules beyond the base font */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
