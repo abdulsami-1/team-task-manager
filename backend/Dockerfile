@@ -1,16 +1,19 @@
-# Simple Dockerfile for the Express backend (used for Cloud Run)
+# Dockerfile for Express backend
+# Works on Render, Cloud Run, and Hugging Face Spaces (port 7860)
 FROM node:20-slim
 
 WORKDIR /app
 
-# Install dependencies first for better build caching
+# Install dependencies first (better layer caching)
 COPY package*.json ./
 RUN npm install --production
 
-# Copy the rest of the code
+# Copy source
 COPY . .
 
-ENV PORT=4000
-EXPOSE 4000
+# Hugging Face Spaces requires port 7860
+# Other platforms use PORT env var, falling back to 4000
+ENV PORT=7860
+EXPOSE 7860
 
 CMD ["node", "index.js"]
