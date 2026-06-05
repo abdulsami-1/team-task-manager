@@ -2,10 +2,16 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// A Pool keeps a few connections open and reuses them.
-// This is better than opening a new connection for every query.
+// Neon (and most cloud PG providers) require SSL.
+// We enable it when DATABASE_URL contains 'sslmode' or when NODE_ENV is production.
+const isRemote =
+  process.env.DATABASE_URL &&
+  (process.env.DATABASE_URL.includes('sslmode') ||
+    process.env.NODE_ENV === 'production');
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: isRemote ? { rejectUnauthorized: false } : false,
 });
 
 module.exports = pool;

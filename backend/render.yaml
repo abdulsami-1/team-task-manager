@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: team-task-manager-api
+    runtime: node
+    rootDir: .
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: DATABASE_URL
+        sync: false   # set manually in Render dashboard - never commit this
+      - key: SESSION_SECRET
+        sync: false   # set manually in Render dashboard - never commit this
+      - key: CLIENT_URL
+        sync: false   # set to your Vercel frontend URL after deploying frontend

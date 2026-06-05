@@ -48,7 +48,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true, // JavaScript on the page cannot read this cookie
-      secure: process.env.NODE_ENV === 'production', // true in production (HTTPS), false in dev (HTTP)
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' required for cross-domain cookies
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })

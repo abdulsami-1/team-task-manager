@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:4000';
+// In dev this points to localhost. In production, set VITE_API_URL to your
+// deployed backend URL (e.g. https://your-app.onrender.com)
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 // Small helper so we don't repeat the same fetch options everywhere
 async function request(path, options = {}) {
