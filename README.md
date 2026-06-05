@@ -1,4 +1,14 @@
-# Team Task Manager
+## Live Demo
+
+| | URL |
+|---|---|
+| **Frontend** | https://team-task-manager-inky-theta.vercel.app |
+| **Backend API** | https://abdul-sami-1-team-task-manager-api.hf.space |
+| **GitHub** | https://github.com/abdulsami-1/team-task-manager |
+
+---
+
+
 
 A full-stack task management app built for teams. Users can register, create teams, add members, and create/assign/track tasks — all behind authenticated, protected routes.
 
