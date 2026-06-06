@@ -13,11 +13,14 @@ const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
+// Trust the proxy in front of us (Hugging Face Spaces / cloud platforms)
+// This is required for secure cookies and correct IP detection behind a reverse proxy
+app.set('trust proxy', 1);
+
 // Read JSON request bodies
 app.use(express.json());
 
 // Allow the frontend to call us AND send the session cookie
-// Supports comma-separated origins in CLIENT_URL for flexibility
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
   .split(',')
   .map((o) => o.trim());
@@ -25,12 +28,11 @@ const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (e.g. curl, Postman) and allowed origins
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error(`CORS blocked: ${origin}`));
-      }
+      // Allow requests with no origin (curl, Postman, server-to-server)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      // Reject but don't throw — return null so Express handles it gracefully
+      return callback(null, false);
     },
     credentials: true,
   })
